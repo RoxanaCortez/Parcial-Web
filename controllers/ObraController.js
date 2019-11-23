@@ -1,8 +1,6 @@
 //obtener todo
-const Obra =require("./../models/Obra");
+const Obra =require('../models/Obra');
 const obraController = {};
-
-
 
 //mostrar todos los usuarios
 obraController.index = async function (req, res, next) {
@@ -13,7 +11,7 @@ obraController.index = async function (req, res, next) {
 //buscar usuario
 obraController.findUser = async function (req, res, next) {
     let { id } = req.params;
-    let obra = await Obras.findById(id).catch(err => {
+    let obra = await Obra.findById(id).catch(err => {
         return next(res);
     });
     return res.status(200).json(obra);
@@ -21,10 +19,10 @@ obraController.findUser = async function (req, res, next) {
 //crear usuario
 obraController.store = async function (req, res, next) {
     let obra = new Obra();
-    obra.nombre = req.body.obra;
+    obra.nombre = req.body.nombre;
     obra.fecha = req.body.fecha;
     obra.tipo = req.body.tipo;
-    obra.invaluable = req.body.invaluable
+    obra.invaluable = req.body.invaluable;
 
     try {
         await obra.save();
@@ -60,7 +58,6 @@ obraController.delete = async function (req, res, next) {
     await Obra.remove({ _id: id });
     res.status(200).json({ "message": "Usuario Eliminado con exito" });
 }
-
 
 
 module.exports = obraController;

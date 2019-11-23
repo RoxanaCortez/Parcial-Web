@@ -4,7 +4,7 @@ const ObraSchema = Mongoose.Schema({
     nombre:{type: String, required: true},
     fecha:{type: String, required: true},
     tipo:{type: String, required: true},
-    esinvaluable:{type: Boolean, required: true}
+    invaluable:{type: String, required: true}
 });
 
-module.exports=Mongoose.model("Obra", ObraSchema);
+module.exports=Mongoose.model('obra', ObraSchema);

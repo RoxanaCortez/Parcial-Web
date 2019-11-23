@@ -1,6 +1,6 @@
 const Mongoose =require("mongoose");
 
-const database="RegisterDB", 
+const database="RegisterDB2", 
 port ="27017", 
 host ="localhost";
 const uri=`mongodb://${host}:${port}/${database}`;

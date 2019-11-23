@@ -5,10 +5,10 @@ obras();
 document.querySelector("#formRegistrar").addEventListener('submit', function (e) {
     e.preventDefault();
     let data = { 
-        nombre: document.forms.formRegistrar.nombre.value,
-        fecha: document.forms.formRegistrar.fecha.value,
-        tipo: document.forms.formRegistrar.tipo.value,
-        invaluable: document.forms.formRegistrar.invaluable.value
+        nombre: document.querySelector("#nombre").value,    //document.forms.formRegistrar.nombre.value,
+        fecha: document.querySelector("#fecha").value,    //document.forms.formRegistrar.fecha.value,
+        tipo: document.querySelector("#tipo").value,    //document.forms.formRegistrar.tipo.value,
+        invaluable: document.querySelector("#invaluable").value    //document.forms.formRegistrar.invaluable.value
     }
     console.log(data);
     fetch('/obra', {
@@ -33,7 +33,7 @@ document.forms.formUpdate.addEventListener("submit", function (e) {
     let data = {
         nombre: document.forms.formUpdate.nombreU.value,
         fecha: document.forms.formUpdate.fechaU.value,
-        tipo: document.forms.formUpdate.U.value,
+        tipo: document.forms.formUpdate.tipoU.value,
         invaluable: document.forms.formUpdate.invaluableU.value
     }
     //peticion
@@ -53,6 +53,7 @@ document.forms.formUpdate.addEventListener("submit", function (e) {
             console.log(err);
         });
 });
+
 //crear obras
 function obras() {
     fetch('/obra',
@@ -62,15 +63,15 @@ function obras() {
         .then(data => {
             let filas = "";
             data.forEach(element => {
-                //console.log(element);
+                console.log(element);
                 filas = filas + `<tr>
            <td>${element.nombre}</td>
            <td>${element.fecha}</td>
            <td>${element.tipo}</td>
            <td>${element.invaluable}</td>
            <td>
-            <a href="/users/${element._id}" class="update btn btn-warning" data-toggle="modal" data-target="#exampleModal">Actualizar</a>
-            <a href="/users/${element._id}" class="delete btn btn-danger">Eliminar</a>
+            <a href="/obra/${element._id}" class="update btn btn-warning" data-toggle="modal" data-target="#exampleModal">Actualizar</a>
+            <a href="/obra/${element._id}" class="delete btn btn-danger">Eliminar</a>
            </td>
            </tr>`
             });

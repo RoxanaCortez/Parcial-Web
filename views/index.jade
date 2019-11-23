@@ -18,14 +18,10 @@ block content
               input(type="text" id="fecha" name="fecha")
             div(class="input-container")
               label(for="tipo") Tipo de obra:
-              select(name="tipo" class="form-control" id="tipo")
-                    option(value="Escultura") Escultura 
-                    option(vlaue="Pintura") Pintura
-                    option(value="Escultura") Musical 
-                    option(vlaue="Pintura") Literario
+              input(type="text" id="tipo" name="tipo" placeholder="escultura,pintura, musical, pintura")
             div(class="input-container")
-              label(class="custom-control-label" for="invaluable") Es invaluable?
-              input(type="checkbox" class="custom-control-input" id="invaluable" name="invaluable")
+              label(for="invaluable") Es invaluable?
+              input(type="text" id="invaluable" name="invaluable" placeholder="si/no")
             button(class="add-btn" type="submit") Agregar
       article(id="main_article")
         div(class="table-header")
@@ -56,10 +52,11 @@ block content
             input(type="hidden" name="_id")
             input(type="text" name="nombreU" placeholder="Nombre" class="form-control")
             input(type="text" name="fechaU" placeholder="Fecha en que se publico" class="form-control mt-1")
-            input(type="text" name="tipoU" placeholder="escultura, pintura, musical, literaria" class="form-control mt-1")
-            input(type="text" name="invaluableU" placeholder="si/no" class="form-control mt-1")
+            input(type="text" name="tipoU" placeholder="escultura, pintura, musical, literaria" class="form-control mt-2")
+            input(type="text" name="invaluableU" placeholder="si/no" class="form-control mt-3")
           div(class="modal-footer")
-            button(e="submit" value="Actualizar" class="btn btn-primary")
+            button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
+            input(type="submit" value="Actualizar" class="btn btn-primary")
   footer           
     p Roxana Cortéz 00502211
 
