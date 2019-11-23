@@ -1,98 +1,66 @@
 //obtener todo
 const Obra =require("./../models/Obra");
+const obraController = {};
 
-//insertar nuevas obras
-const insert =(req, res)=>{
-    const obra = new Obra(req.body);
-    obra.save ((error, documents)=>{
-        if(error)
-            return res.status(500).json({
-                msg:"hubo un error"
-            });
-        return res.status(201).json({
-            msg: "creado",
-            register:documents
-        });
-    });
-};
 
-//buscar por id
-const getOneObra= (req,res)=>{
-    Obra.findById(req.params.id, (error, documents)=>{
-        if(error)
-            return res.status(500).json({
-                msg:"hubo un error"
-            });
-        return res.status(200).json({
-            msg:"ok",
-            registers:documents
-        });
-    });
+
+//mostrar todos los usuarios
+obraController.index = async function (req, res, next) {
+    let obras = await Obra.find();
+    return res.status(200).json(obras);
 }
 
-//funcion de todos las obras guardados en la base
-const getObra = (req,res)=>{
-    Obra.find({}, (error, documents)=>{
-        if(error)
-            return res.status(500).json({
-                msg:"hubo un error"
-            });
-        return res.status(200).json({
-            msg:"ok",
-            registers:documents
-        });
+//buscar usuario
+obraController.findUser = async function (req, res, next) {
+    let { id } = req.params;
+    let obra = await Obras.findById(id).catch(err => {
+        return next(res);
     });
-};
+    return res.status(200).json(obra);
+}
+//crear usuario
+obraController.store = async function (req, res, next) {
+    let obra = new Obra();
+    obra.nombre = req.body.obra;
+    obra.fecha = req.body.fecha;
+    obra.tipo = req.body.tipo;
+    obra.invaluable = req.body.invaluable
 
-const update = (req, res)=>{
-    let obra = req.body;
-
-    if(!obra._id){
-        return res.status(400).json({
-            message: "id is needed",
-        }); 
+    try {
+        await obra.save();
+        return res.status(200).json({ "message": "Usuario agregado con exito" });
+    } catch (err) {
+        return res.status(500).json({ err: err, message: "Por favor revise sus datos" });
     }
 
-    Obra.update({_id: obra._id}, obra)
-        .then(value =>{
-            res.status(200).json({
-                message: "update register was successful"
-            });
-        })
-        .catch((err)=>{
-            res.status(500).json({
-                message: "Something happend trying to update the Register"
-            });
-        })
-
 }
 
-const deleteById = (req, res)=>{
-    let obra = req.body;
-
-    if(!obra._id){
-        return res.status(400).json({
-            message: "id is needed",
-        }); 
+//modificar usuario
+obraController.update = async function (req, res, next) {
+    let { id } = req.params;
+    let obra = {
+        nombre: req.body.nombre,
+        fecha: req.body.fecha,
+        tipo: req.body.tipo,
+        invaluable: req.body.invaluable
     }
-
-    Obra.deleteOne({_id:obra._id})
-        .then(deleted=>{
-            res.status(200).json({
-                message: "delete register was successful"
-            });
-        })
-        .catch(err=>{
-            res.status(500).json({
-                message: "Something happend trying to delete the Register"
-            });
-        })
+    console.log(obra);
+    try {
+        await Obra.update({ _id: id }, obra);
+        res.status(200).json({ "message": "Usuario actualizado con exito" });
+    }
+    catch (err) {
+        return res.status(500).json({ err: err, message: "Por favor revise sus datos" });
+    }
 }
 
-module.exports={
-    insert,
-    getOneObra,
-    getObra,
-    update,
-    deleteById
-};
+//eliminar usuario
+obraController.delete = async function (req, res, next) {
+    let { id } = req.params;
+    await Obra.remove({ _id: id });
+    res.status(200).json({ "message": "Usuario Eliminado con exito" });
+}
+
+
+
+module.exports = obraController;

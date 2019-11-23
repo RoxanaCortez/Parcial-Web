@@ -1,142 +1,118 @@
-window.onload = () => {
-    app.init();
-}
+obras();
 
-let app = {
-    init: function () {
-        this.addEvents();
-        this.loadContent();
-    },
-    addEvents: function () {
-        document.postForm.addEventListener("submit", (event) => {
-            this.submitGet(event, this.addRow);
-        });
-    },
-    addRow: function (data) {
-        let tbody = document.getElementsByClassName("get")[0];
-        let tr = document.createElement("tr");
-        tr.innerHTML = `<td>${data.nombre} </td>
-                        <td>${data.fecha}</td>
-                        <td>${data.tipo}</td>
-                        <td>${data.invaluable}</td>
-                        <td>
-                            <a href="#" class="delete"> Delete </a> 
-                            <a href="#" class="update"> Update </a>
-                        </td>`;
-        tr.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
-            this.deleteGet(event, data, tr, tbody);
-        });
-        tr.getElementsByClassName("update")[0].addEventListener("click", (event) => {
-            this.updateGet(tr, tbody, data);
-        });
-        tbody.appendChild(tr);
-    },
-    updateGet: function(tr, tbody, data) {
-        tr.innerHTML = `
-                                <td colspan="3"> 
-                                    <form action="/api/get">
-                                        <input type="text" name="nombre" readonly value="${data.nombre}">
-                                        <input type="text" name="fecha" value="${data.fecha}">
-                                        <input type="text" name="tipo" value="${data.tippo}">
-                                        <input type="text" name="inivaluable" value="${data.tipo}">
-                                        <input type="submit" value="Save">
-                                        <input type="button" value="Cancel">
-                                    </form>
-                                </td>`;
-        let form = tr.getElementsByTagName("form")[0];
-        let deleteGet = this.deleteGet;
-        let update = this.updateGet;
-
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            let dataForm = {
-                nombre: form.nombre.value,
-                fecha: form.fecha.value,
-                tipo: form.tipo.value,
-                invaluable: form.invaluable.value
-            };
-            fetch('/api/get/' + data._id, {
-                    method: 'PUT',
-                    body: JSON.stringify(dataForm),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(res => res.json())
-                .then(resData => {
-                    if (resData.ok) {
-                        let trN = document.createElement("tr");
-                        trN.innerHTML = `
-                                            <td>${dataForm.nombre}</td>
-                                            <td>${dataForm.fecha}</td>
-                                            <td>${dataForm.tipo}</td>
-                                            <td>${dataForm.invaluable}</td>
-                                            <td>
-                                                <a href="#" class="delete"> Delete </a> 
-                                                <a href="#" class="update"> Update </a>
-                                            </td>`;
-
-                        tbody.replaceChild(trN, tr);
-                        trN.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
-                            deleteGet(event, data, trN, tbody);
-                        });
-                        trN.getElementsByClassName("update")[0].addEventListener("click", (event) => {
-                            update(trN, tbody, data);
-                        });
-                    } else {
-                        document.getElementsByClassName("errors")[0].innerText = "No se puede actulizar";
-                    }
-                });
-        });
-    },
-    deleteGet: (event, data, tr, tbody) => {
-        event.preventDefault();
-        fetch('/api/get/' + data._id, {
-                method: 'DELETE'
-            }).then(res => res.json())
-            .then(res => {
-                if (res.ok) {
-                    tbody.removeChild(tr);
-                } else {
-                    document.getElementsByClassName("errors")[0].innerText = "No se pudo elminiar";
-                }
-            })
-    },
-    submitGet: (event, addRow) => {
-        event.preventDefault();
-        let data = {
-            nombre: document.postForm.nombre.value,
-            fecha: document.postForm.fecha.value,
-            tipo: document.postForm.tipo.value,
-            invaluable: document.postForm.invaluable.value
-        };
-        fetch('/api/get', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            .then(_data => {
-                if (_data.ok) {
-                    addRow(_data.guardado);
-                } else {
-                    document.getElementsByClassName("errors")[0].innerText = "No se pudo guardar";
-                }
-            });
-    },
-    loadContent: function () {
-        fetch('/api/get', {
-                method: 'GET'
-            }).then(res => {
-                return res.json()
-            })
-            .then(data => {
-
-                if (data.ok) {
-                    data.get.forEach(element => {
-                        this.addRow(element);
-                    });
-                }
-            })
+//console.log(document.forms.formRegistrar.nombre.value);
+//formulario para registrar
+document.querySelector("#formRegistrar").addEventListener('submit', function (e) {
+    e.preventDefault();
+    let data = { 
+        nombre: document.forms.formRegistrar.nombre.value,
+        fecha: document.forms.formRegistrar.fecha.value,
+        tipo: document.forms.formRegistrar.tipo.value,
+        invaluable: document.forms.formRegistrar.invaluable.value
     }
+    console.log(data);
+    fetch('/obra', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .then(response => {
+            alert("Tarea insertada con exito");
+            obras();
+        })
+        .catch(err => {
+            alert("Por favor revise los datos ingresados");
+            console.log(err);
+        });
+});
+//formulario para actualizar
+document.forms.formUpdate.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let data = {
+        nombre: document.forms.formUpdate.nombreU.value,
+        fecha: document.forms.formUpdate.fechaU.value,
+        tipo: document.forms.formUpdate.U.value,
+        invaluable: document.forms.formUpdate.invaluableU.value
+    }
+    //peticion
+    fetch('/obra/' + document.forms.formUpdate._id.value, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .then(response => {
+            alert("Obra Actualizada con exito");
+            obras();
+        })
+        .catch(err => {
+            alert("Por favor revise los datos ingresados");
+            console.log(err);
+        });
+});
+//crear obras
+function obras() {
+    fetch('/obra',
+        {
+            method: 'GET'
+        }).then(res => res.json())
+        .then(data => {
+            let filas = "";
+            data.forEach(element => {
+                //console.log(element);
+                filas = filas + `<tr>
+           <td>${element.nombre}</td>
+           <td>${element.fecha}</td>
+           <td>${element.tipo}</td>
+           <td>${element.invaluable}</td>
+           <td>
+            <a href="/users/${element._id}" class="update btn btn-warning" data-toggle="modal" data-target="#exampleModal">Actualizar</a>
+            <a href="/users/${element._id}" class="delete btn btn-danger">Eliminar</a>
+           </td>
+           </tr>`
+            });
+            document.querySelector("#tbody_id").innerHTML = filas;
+            //agregando los eventos para actualizar 
+            let btn_update = document.querySelectorAll('.update');
+            btn_update.forEach(item => {
+                item.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    let url = this["href"];
+                    console.log(url);
+                    fetch(url, {
+                        method: "GET"
+                    }).then(res => res.json())
+                        .catch(err => console.error(err))
+                        .then(response => {
+                            document.forms.formUpdate._id.value = response._id;
+                            document.forms.formUpdate.nombreU.value = response.nombre;
+                            document.forms.formUpdate.fechaU.value = response.fecha;
+                            document.forms.formUpdate.tipoU.value = response.tipo;
+                            document.forms.formUpdate.invaluableU.value = response.invaluable;
+                        });
+                });
+            });
+            let btn_delete = document.querySelectorAll('.delete');
+            btn_delete.forEach(item => {
+                item.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    let url = this["href"];
+                    //peticion para eliminar
+                    fetch(url, {
+                        method: "DELETE",
+                    }).then(res => res.json())
+                        .then(response => {
+                            alert("Obra eliminada con exito");
+                            obras();
+                        })
+                        .catch(err => {
+                            alert("Ocurrio un error al eliminar la obra");
+                            console.log(err);
+                        });
+                });
+            })
+        })
 }

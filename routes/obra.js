@@ -3,10 +3,15 @@ var router = express.Router();
 const ObraController = require("../controllers/ObraController");
 
 /* GET All registers */
-router.get('/', ObraController.getObra);
-router.get('/:id', ObraController.getOneObra);
-router.post('/', ObraController.insert);
-router.put('/', ObraController.update);
-router.delete('/', ObraController.deleteById);
+//mostrar todos los obra
+router.get('/', ObraController.index);
+//mostrar un obra
+router.get('/:id',ObraController.findUser);
+//insertar obra
+router.post('/',ObraController.store);
+//actualizar obra
+router.put('/:id',ObraController.update);
+//eliminando obra
+router.delete('/:id',ObraController.delete);
 
 module.exports = router;

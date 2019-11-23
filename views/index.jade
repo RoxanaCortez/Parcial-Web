@@ -2,14 +2,14 @@ extends layout
 
 block content
   header                 
-      div(v id="page_title")
+      div(id="page_title")
         h1 Obras de arte
   section              
     div(class="container")
       aside(id="aside_container")    
         div(class="form-container")
           h3 Agregar obra de arte
-          form(action="" class="form")
+          form(action="post" class="form" id="formRegistrar")
             div(class="input-container")
               label(for="nombre") Nombre del artista: 
               input(type="text" id="nombre" name="nombre")
@@ -44,5 +44,23 @@ block content
                     th Es invaluable?
                     th(class="sticky") Acción
                 tbody(id="tbody_id")
+  div(class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+    div(class="modal-dialog" role="document")
+      div(class="modal-content")
+        div(class="modal-header")
+          h5(class="modal-title" id="exampleModalLabel") Actualizar
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+        form(action="" method="post" name="formUpdate")
+          div(class="modal-body")
+            input(type="hidden" name="_id")
+            input(type="text" name="nombreU" placeholder="Nombre" class="form-control")
+            input(type="text" name="fechaU" placeholder="Fecha en que se publico" class="form-control mt-1")
+            input(type="text" name="tipoU" placeholder="escultura, pintura, musical, literaria" class="form-control mt-1")
+            input(type="text" name="invaluableU" placeholder="si/no" class="form-control mt-1")
+          div(class="modal-footer")
+            button(e="submit" value="Actualizar" class="btn btn-primary")
   footer           
     p Roxana Cortéz 00502211
+
+  script(src='/javascripts/main.js')
