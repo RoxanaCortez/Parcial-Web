@@ -1,5 +1,48 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  header                 
+      div(v id="page_title")
+        h1 Obras de arte
+  section              
+    div(class="container")
+      aside(id="aside_container")    
+        div(class="form-container")
+          h3 Agregar obra de arte
+          form(action="" class="form")
+            div(class="input-container")
+              label(for="nombre") Nombre del artista: 
+              input(type="text" id="nombre" name="nombre")
+            div(class="input-container")
+              label(for="fecha") Fecha en que se termino/publico:
+              input(type="text" id="fecha" name="fecha")
+            div(class="input-container")
+              label(for="tipo") Tipo de obra:
+              select(name="tipo" class="form-control" id="tipo")
+                    option(value="Escultura") Escultura 
+                    option(vlaue="Pintura") Pintura
+                    option(value="Escultura") Musical 
+                    option(vlaue="Pintura") Literario
+            div(class="input-container")
+              label(class="custom-control-label" for="invaluable") Es invaluable?
+              input(type="checkbox" class="custom-control-input" id="invaluable" name="invaluable")
+            button(class="add-btn" type="submit") Agregar
+      article(id="main_article")
+        div(class="table-header")
+            div(class="title-container")
+                p Lista de obras de arte
+        div(class="search-box")
+            form(class="search")
+                input(type="text" id="search_input" onkeyup="search()" placeholder="Buscar....")
+        div(class="table-container")
+            table(id="table_id" class="table")
+                thead
+                  tr
+                    th Nombre del artista
+                    th Fecha que se termino/publico
+                    th Tipo de obra
+                    th Es invaluable?
+                    th(class="sticky") Acción
+                tbody(id="tbody_id")
+  footer           
+    p Roxana Cortéz 00502211

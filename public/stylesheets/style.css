@@ -1,8 +1,304 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-a {
-  color: #00B7FF;
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container{
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
+
+section .container{
+    height: 100vh;
+} 
+
+/* Header */
+
+header{
+  background: #3E3D3D;
+  color: #FFF;
+  padding-top: 1rem;
+  min-height: 70px;
+  padding-bottom: 1rem;
+  border-bottom: #BB026C 5px solid;
+}
+
+header a{
+  font-family: 'Raleway', sans-serif;
+  color: #FFF;
+  text-decoration: none;
+  font-size: 1em;
+  text-transform: uppercase;
+}
+
+header li{
+  padding: 0 2rem;
+  float: left;
+  display: inline;
+}
+
+#page_title {
+  float: left;
+}
+
+nav{
+  float: right;
+  margin-top: 0.5rem;
+}
+
+.selected a {
+  color: #BB026C;
+  font-weight: bold;
+}
+
+header a:hover{
+  color: gray;
+  font-weight: bold;
+}
+
+/*Main article*/
+#main_article{
+  float: left;
+  width: 65%;
+}
+
+#main_article h1{
+    margin: 2rem 0;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Raleway', sans-serif;
+    width: 100%;
+    border: none;
+    padding: 1rem;
+   
+}
+
+.title-container p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.3rem;
+    padding-top: 3px;
+    color: #000;
+}
+
+
+
+.add-btn:active {
+    background-color: green;
+}
+
+
+.search-box {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.search {
+    display: flex;
+    justify-content: flex-end;
+    float: right;
+    width: 30%;
+    align-items: flex-end;
+    margin: 1rem;
+}
+
+.search input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #EEE;
+    font-family: 'Raleway', sans-serif;
+    width: 100%;
+}
+
+::-webkit-input-placeholder {
+    color: gray;
+    font-family: 'Raleway', sans-serif;
+}
+
+:-ms-input-placeholder { 
+    color: gray;
+    font-family: 'Raleway', sans-serif;
+
+}
+
+::placeholder {
+    color: gray;
+    font-family: 'Raleway', sans-serif;
+    
+}
+
+
+.table-container {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+/*Tabla estilo cebra*/
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+
+table .sticky {
+    position: sticky;
+    right: 0;
+    min-width: 200px;
+
+}
+
+table tr .sticky {
+    background: white;
+}
+
+tr:nth-child(even) .sticky {
+    background-color: #f2f2f2;
+}
+
+
+/*Botones de Acción*/
+.btn {
+    background-color: inherit;
+    border: none;
+    padding: 0 8px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.btn.delete:active {
+    color: darkgray;
+    outline: none;
+}
+
+.btn.edit:active {
+    color: darkgray;
+    outline: none;
+}
+
+.btn.delete {
+    color: #23426B;
+}
+
+.btn.edit {
+    color: #23426B;
+}
+
+/* aside */
+#aside_container {
+  float: right;
+  width: 30%;
+  padding: 0.5rem;
+}
+
+.form-container{
+  color: #000;
+  padding: 16px;
+  background-color: #E4E4E4;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#aside_container input {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.input-container{
+    padding: 0.5rem;
+}
+
+.add-btn {
+    background-color: #4CAF50;
+    color: #FFF;
+    width: 150px;
+    padding: 0.5rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 17px;
+}
+
+
+footer{
+  padding: 20px;
+  margin-top: 20px;
+  color: #ffffff;
+  background-color: #BB026C;
+  text-align: center;
+}
+
+
+
+
+@media(max-width: 768px){
+  #page_title, nav, nav li,
+  article#main_article, #aside_container {
+    float: none;
+    text-align: center;
+    width: 100%;
+  }
+    
+    #page_title{
+        font-size: 0.6em;
+    }
+    
+    nav li{
+        font-size: 0.7em;
+        padding: 0 1rem;
+    }
+
+  header {
+    padding-bottom: 20px;
+  }
+    
+    label{
+        font-size: 0.8em;
+    }
+    
+    footer{
+        font-size: 0.7rem;
+    }
+
+   .title-container p {
+       font-size: 1rem;
+    }
+
+    .form-container h3{
+        font-size: 0.9rem;
+    }
+    
+    .add-btn{
+        font-size: 0.8rem;
+        
+    }
+    
 }
